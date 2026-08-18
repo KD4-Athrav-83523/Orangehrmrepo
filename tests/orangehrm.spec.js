@@ -1,6 +1,8 @@
 const {test,chromium} = require('@playwright/test');
 
+
 test("OrangeHRM",async() =>{
+    test.setTimeout(100000);
 
     const browser = await chromium.launch({headless : false});
 
@@ -9,7 +11,7 @@ test("OrangeHRM",async() =>{
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
     await page.waitForTimeout(4000);
-    
+
     await page.getByRole("textbox",{name : "Username"}).fill("Admin");
 
     await page.getByRole("textbox",{name : "Password"}).fill("admin123");
