@@ -22,6 +22,6 @@ test("OrangeHRM",async() =>{
 
     await page.getByRole('button',{name : "Add"}).click();
 
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(5000);
 
 });
