@@ -1,27 +1,21 @@
-const {test,chromium} = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
+test('OrangeHRM - Admin Add User Page Navigation', async ({ page }) => {
+  test.setTimeout(90000);
 
-test("OrangeHRM",async() =>{
-    test.setTimeout(100000);
+  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login', {
+    waitUntil: 'domcontentloaded',
+  });
 
-    const browser = await chromium.launch({headless : false});
+  await page.getByPlaceholder('Username').fill('Admin');
+  await page.getByPlaceholder('Password').fill('admin123');
+  await page.getByRole('button', { name: 'Login' }).click();
 
-    const page = await browser.newPage();
+  await expect(page).toHaveURL(/.*dashboard/);
 
-    await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+  await page.getByRole('link', { name: 'Admin' }).click();
+  await expect(page).toHaveURL(/.*admin\/viewSystemUsers/);
 
-    await page.waitForTimeout(4000);
-
-    await page.getByRole("textbox",{name : "Username"}).fill("Admin");
-
-    await page.getByRole("textbox",{name : "Password"}).fill("admin123");
-
-    await page.getByRole("button",{name : 'Login'}).click();
-
-    await page.getByRole('link', { name: 'Admin' }).click();
-
-    await page.getByRole('button',{name : "Add"}).click();
-
-    await page.waitForTimeout(5000);
-
+  await page.getByRole('button', { name: 'Add' }).click();
+  await expect(page.getByRole('heading', { name: 'Add User' })).toBeVisible();
 });
