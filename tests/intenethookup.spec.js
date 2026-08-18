@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('Herokuapp Form Authentication Test', async ({ page }) => {
-  test.setTimeout(60000);
+  test.setTimeout(20000);
 
   await page.goto('https://the-internet.herokuapp.com/login', {
     waitUntil: 'domcontentloaded',
